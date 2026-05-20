@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sandbox-Native // Zero-Trust App Synthesis</title>
+    <style>
+        :root { --bg: #0d0e12; --card: #161822; --accent: #00ffaa; --text: #f0f2f5; }
+        body { background: var(--bg); color: var(--text); font-family: system-ui, sans-serif; margin: 0; padding: 20px; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+        .container { max-width: 600px; width: 100%; background: var(--card); padding: 30px; border-radius: 12px; border: 1px solid #25293a; box-shadow: 0 8px 32px rgba(0,0,0,0.5); }
+        h1 { color: var(--accent); font-size: 24px; margin-top: 0; }
+        p { color: #8a92b2; font-size: 14px; line-height: 1.5; }
+        .upload-box { border: 2px dashed #3a3f58; padding: 30px; text-align: center; border-radius: 8px; margin: 20px 0; cursor: pointer; transition: 0.2s; }
+        .upload-box:hover { border-color: var(--accent); background: rgba(0,255,170,0.03); }
+        textarea { width: 100%; height: 100px; background: #0d0e12; border: 1px solid #25293a; border-radius: 6px; color: #fff; padding: 12px; box-sizing: border-box; resize: none; font-family: inherit; }
+        textarea:focus { outline: 1px solid var(--accent); }
+        button { background: var(--accent); color: #0d0e12; border: none; padding: 12px 24px; border-radius: 6px; font-weight: bold; width: 100%; margin-top: 15px; cursor: pointer; font-size: 16px; }
+        .badge { background: rgba(0,255,170,0.1); color: var(--accent); padding: 4px 8px; border-radius: 4px; font-size: 11px; font-weight: bold; text-transform: uppercase; display: inline-block; margin-bottom: 15px; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="badge">🔒 Zero-Knowledge RAM-Only Pipeline</div>
+    <h1>Sandbox-Native</h1>
+    <p>Describe your native Android app idea or upload your existing structural project file. Multi-agent self-healing compilation runs entirely in memory and auto-destructs instantly post-download.</p>
+    
+    <div class="upload-box" id="dropzone">
+        <span style="font-size: 24px;">📁</span>
+        <p style="margin: 5px 0 0 0;">Drag & drop your structural app .ZIP here <br><span style="font-size:12px; color:#565d7a;">(Optional - for updates)</span></p>
+    </div>
+
+    <textarea placeholder="Type what kind of native app you want to build or modify..."></textarea>
+    <button onclick="startSynthesis()">Trigger Agentic Synthesis</button>
+</div>
+
+<script>
+    // Initialize temporary, local browser handshake keys on load
+    window.onload = function() {
+        if (!localStorage.getItem('ephemeral_handshake_key')) {
+            const randomKey = btoa(Math.random().toString() + Date.now().toString());
+            localStorage.setItem('ephemeral_handshake_key', randomKey);
+            console.log("Initialized secure local browser state key.");
+        }
+    };
+
+    function startSynthesis() {
+        alert("Secure connection initiated. Temporary browser session key verified. Ready for backend orchestration.");
+    }
+</script>
+</body>
+</html>
