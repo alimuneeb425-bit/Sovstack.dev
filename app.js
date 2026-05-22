@@ -13,7 +13,9 @@ const inspectTarget = document.getElementById('inspect-target');
 const inspectHexStream = document.getElementById('inspect-hex-stream');
 const shredBadge = document.getElementById('shred-badge');
 
-const autonomousEnclaveWorker = new Worker('worker.js');
+c// This forces the browser to read the worker file directly as a local text blob, bypassing Vercel's path locks!
+const autonomousEnclaveWorker = new Worker(URL.createObjectURL(new Blob([await (await fetch('worker.js')).text()], {type: 'application/javascript'})));
+
 
 function updateLiveTerminal(nodeId, textLine) {
     terminalScreen.innerHTML += `<br>&gt; <span class="inspect-highlight">[NODE_0${nodeId}]:</span> ${textLine}`;
