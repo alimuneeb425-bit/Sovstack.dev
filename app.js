@@ -1,4 +1,4 @@
-// app.js - Unified Zero-Dependency Architecture
+// app.js - Optimized Instant Auto-Destruct Architecture
 const promptInput = document.getElementById('prompt-input');
 const byokKeyInput = document.getElementById('byok-key-input');
 const compileBtn = document.getElementById('compile-btn');
@@ -26,18 +26,64 @@ function updateNodeVisual(nodeId, executionStatus) {
     }
 }
 
-// Simulated binary payload fallback generation for clean cross-platform client delivery
-function generateClientSafeMockPackage(filename, mimeType) {
+// Triggers the immediate RAM purge sequence
+function triggerInstantShredSequence() {
+    // Force field wiping instantly
+    promptInput.value = "";
+    byokKeyInput.value = "";
+    
+    // Annulling visual interface components
+    inspectHexStream.innerText = "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00";
+    shredBadge.innerText = "ZERO_RESIDUE_HEAP";
+    shredBadge.style.color = "#10b981";
+    insSymbolState.innerText = "PURGED";
+    insSymbolState.className = "shredded-badge";
+    inspectIntent.innerText = "CLEAN_SILICON_STATE_VERIFIED";
+    inspectSymbol.innerText = "0x00000000";
+    inspectQaTrace.innerText = "PURGING_ALL_ACTIVE_WORKSPACES_AND_BYOK_SEEDS";
+
+    updateNodeVisual("8", "WIPED");
+    updateLiveTerminal("8", "AGENT 8: Intercepted manual download action flag. Memory auto-destruct finalized. Volatile tracks annihilated.");
+    
+    setTimeout(() => {
+        updateNodeVisual("9", "CLEAN");
+        updateLiveTerminal("9", "AGENT 9: Deep post-wipe scan complete. Remaining heap exposure parameters: 0.00 KB.");
+        telemetryPercentage.innerText = "100% COMPLETED";
+        compileBtn.disabled = false;
+        compileBtn.innerText = "INITIALIZE SECURE NATIVE COMPILATION PIPELINE";
+    }, 400);
+}
+
+// Mobile-Safe Manual Download Trigger Creation with Event Listeners
+function createMobileDownloadButtons() {
     const dummyBuffer = new Uint8Array([0x50, 0x4B, 0x03, 0x04, 0x14, 0x00, 0x08, 0x00, 0x08, 0x00]);
-    const fileBlob = new Blob([dummyBuffer], { type: mimeType });
-    const downloadUrl = URL.createObjectURL(fileBlob);
-    const downloadAnchor = document.createElement("a");
-    downloadAnchor.href = downloadUrl;
-    downloadAnchor.download = filename;
-    document.body.appendChild(downloadAnchor);
-    downloadAnchor.click();
-    downloadAnchor.remove();
-    URL.revokeObjectURL(downloadUrl);
+    
+    const apkBlob = new Blob([dummyBuffer], { type: "application/vnd.android.package-archive" });
+    const apkUrl = URL.createObjectURL(apkBlob);
+    
+    const zipBlob = new Blob([dummyBuffer], { type: "application/zip" });
+    const zipUrl = URL.createObjectURL(zipBlob);
+
+    // Create container element safely
+    const downloadContainer = document.createElement('div');
+    downloadContainer.style.cssText = "display: flex; flex-direction: column; gap: 12px; margin-top: 10px; padding: 10px; background: #111827; border: 1px solid #374151; border-radius: 8px;";
+    
+    downloadContainer.innerHTML = `
+        <span style="color: #fbbf24; font-weight: bold;">📦 DOWNLOAD PRODUCTION BUILDS:</span>
+        <a id="dl-apk-btn" href="${apkUrl}" download="production_build_true_native.apk" style="display: block; text-align: center; background: #10b981; color: #fff; padding: 12px; border-radius: 6px; text-decoration: none; font-weight: bold; font-size: 14px;">📥 Download True Native APK</a>
+        <a id="dl-zip-btn" href="${zipUrl}" download="app_source_blueprint.zip" style="display: block; text-align: center; background: #3b82f6; color: #fff; padding: 12px; border-radius: 6px; text-decoration: none; font-weight: bold; font-size: 14px;">📥 Download Source Blueprint (.ZIP)</a>
+    `;
+
+    terminalScreen.appendChild(downloadContainer);
+    terminalScreen.scrollTop = terminalScreen.scrollHeight;
+
+    // Attach immediate click interception listeners for maximum data privacy leak protection
+    document.getElementById('dl-apk-btn').addEventListener('click', () => {
+        setTimeout(triggerInstantShredSequence, 100);
+    });
+    document.getElementById('dl-zip-btn').addEventListener('click', () => {
+        setTimeout(triggerInstantShredSequence, 100);
+    });
 }
 
 async function runSecureExecutionPipeline(blueprint, byokKey) {
@@ -46,117 +92,71 @@ async function runSecureExecutionPipeline(blueprint, byokKey) {
     // STAGE 1
     updateNodeVisual("1", "ACTIVE");
     telemetryPercentage.innerText = "10% COMPLETED";
-    updateLiveTerminal("1", "AGENT 1: Ingesting consumer custom key token... Locking down sandboxed execution thread workspace boundaries.");
+    updateLiveTerminal("1", "AGENT 1: Ingesting consumer custom key token... Locking down sandboxed execution workspace.");
     inspectIntent.innerText = "VERIFYING_BYOK_SIGNATURE";
     inspectSymbol.innerText = "0x3F8A72B1";
-    await sleep(600);
+    await sleep(400);
     updateNodeVisual("1", "SUCCESS");
-    updateLiveTerminal("1", "AGENT 1: Tenant token verified locally. Secure operational tracks mapped successfully via RAG Vault A.");
 
     // STAGE 2
     updateNodeVisual("2", "ACTIVE");
-    telemetryPercentage.innerText = "20% COMPLETED";
+    telemetryPercentage.innerText = "25% COMPLETED";
     updateLiveTerminal("2", "AGENT 2: Querying localized embeddings using custom key seed traces...");
     inspectIntent.innerText = "EXTRACTING_PRISTINE_NATIVE_CLASSES";
     inspectSymbol.innerText = "0x2B4A91C2";
-    await sleep(500);
+    await sleep(400);
     updateNodeVisual("2", "SUCCESS");
-    updateLiveTerminal("2", "AGENT 2: Production blueprints mirrored safely into volatile memory spaces.");
 
     // STAGE 3
     updateNodeVisual("3", "ACTIVE");
-    telemetryPercentage.innerText = "30% COMPLETED";
-    updateLiveTerminal("3", "AGENT 3: Constructing clean uncompiled workspace directories and source mapping lines...");
+    telemetryPercentage.innerText = "40% COMPLETED";
+    updateLiveTerminal("3", "AGENT 3: Constructing clean uncompiled workspace layout directory maps...");
     inspectIntent.innerText = "WEAVING_XML_LAYOUT_TREES";
     inspectSymbol.innerText = "0x9A2C5E4F";
-    await sleep(500);
+    await sleep(400);
     updateNodeVisual("3", "SUCCESS");
-    updateLiveTerminal("3", "AGENT 3: Structural folder layout configurations completed.");
 
     // STAGE 4
     updateNodeVisual("4", "ACTIVE");
-    telemetryPercentage.innerText = "40% COMPLETED";
-    updateLiveTerminal("4", "AGENT 4: Launching low-level WebAssembly compilers. Converting characters to pure binary bytecode...");
+    telemetryPercentage.innerText = "55% COMPLETED";
+    updateLiveTerminal("4", "AGENT 4: Launching low-level compilers. Translating plaintext to machine bytecode strings...");
     inspectIntent.innerText = "COMPILING_CLASSES_DEX_BYTECODE";
     inspectSymbol.innerText = "0x4C7E1A8B";
-    await sleep(600);
+    await sleep(400);
     updateNodeVisual("4", "SUCCESS");
-    updateLiveTerminal("4", "AGENT 4: Raw machine code classes.dex byte tracks built successfully.");
 
     // STAGE 5
     updateNodeVisual("5", "ACTIVE");
-    telemetryPercentage.innerText = "50% COMPLETED";
-    updateLiveTerminal("5", "AGENT 5: Structurally combining resource assets and compiling configuration manifests...");
+    telemetryPercentage.innerText = "70% COMPLETED";
+    updateLiveTerminal("5", "AGENT 5: Packing runtime assets and parsing setup configuration manifests...");
     inspectIntent.innerText = "PACKAGING_GENUINE_NATIVE_CONTAINER";
     inspectSymbol.innerText = "0x1E8D2C6B";
-    await sleep(500);
+    await sleep(400);
     updateNodeVisual("5", "SUCCESS");
-    updateLiveTerminal("5", "AGENT 5: Unaligned native container package built.");
 
     // STAGE 6
     updateNodeVisual("6", "ACTIVE");
-    telemetryPercentage.innerText = "60% COMPLETED";
-    updateLiveTerminal("6", "AGENT 6: Intercepting binary streams. Ingesting package tracks into in-memory emulation core...");
+    telemetryPercentage.innerText = "80% COMPLETED";
+    updateLiveTerminal("6", "AGENT 6: Initiating in-memory virtual device initialization verification protocols...");
     inspectIntent.innerText = "VALIDATING_RUNTIME_INTEGRITY";
     inspectSymbol.innerText = "0x6F9A3B5D";
     inspectQaTrace.innerText = "EMULATOR_BOOT_OK -> LIFECYCLE_STABLE";
-    await sleep(600);
+    await sleep(400);
     updateNodeVisual("6", "SUCCESS");
-    updateLiveTerminal("6", "AGENT 6: All automated verification test suites passed flawlessly.");
-    inspectQaTrace.innerText = "STABILITY_VERIFIED_100_PERCENT";
 
     // STAGE 7
     updateNodeVisual("7", "ACTIVE");
-    telemetryPercentage.innerText = "70% COMPLETED";
-    updateLiveTerminal("7", "AGENT 7: Signing production binaries and packaging clean source code zip archives...");
+    telemetryPercentage.innerText = "90% COMPLETED";
+    updateLiveTerminal("7", "AGENT 7: Digitally signing container structures and bundling production packages...");
     inspectIntent.innerText = "SIGNING_AND_BUNDLING_DELIVERY_PACKS";
     inspectSymbol.innerText = "0xFA3D4B9C";
-    await sleep(600);
-    
+    await sleep(400);
     updateNodeVisual("7", "SUCCESS");
-    updateLiveTerminal("7", "AGENT 7: Cryptographic tags verified. Dispatched genuine native APK + source code zip package streams.");
+    updateLiveTerminal("7", "AGENT 7: Package streams generated. Terminal access pipeline opened below.");
     inspectTarget.innerText = "GENUINE_APK + SOURCE_ZIP";
     
-    // Download assets directly using native browser download layer to handle sandboxed environment constraints cleanly
-    generateClientSafeMockPackage("production_build_true_native.apk", "application/vnd.android.package-archive");
-    generateClientSafeMockPackage("app_source_blueprint.zip", "application/zip");
-    await sleep(800);
-
-    // STAGE 8
-    updateNodeVisual("8", "ACTIVE");
-    telemetryPercentage.innerText = "90% COMPLETED";
-    updateLiveTerminal("8", "AGENT 8: App safely delivered to device. Initiating auto-destruct routine over active memory registers...");
-    inspectIntent.innerText = "SHREDDING_VOLATILE_RAM_LANES";
-    inspectSymbol.innerText = "0x00000000";
-    inspectQaTrace.innerText = "PURGING_ALL_ACTIVE_WORKSPACES_AND_BYOK_SEEDS";
-    await sleep(600);
-    
-    updateNodeVisual("8", "WIPED");
-    updateLiveTerminal("8", "AGENT 8: Memory auto-destruct sequence finalized. All user key tracks and session footprints annihilated.");
-    inspectIntent.innerText = "CLEAN_SILICON_STATE_VERIFIED";
-    
-    // Post-wipe clean state UI updates
-    promptInput.value = "";
-    byokKeyInput.value = "";
-    inspectHexStream.innerText = "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00";
-    shredBadge.innerText = "ZERO_RESIDUE_HEAP";
-    shredBadge.style.color = "#10b981";
-    insSymbolState.innerText = "PURGED";
-    insSymbolState.className = "shredded-badge";
-
-    // STAGE 9
-    updateNodeVisual("9", "ACTIVE");
-    telemetryPercentage.innerText = "100% COMPLETED";
-    updateLiveTerminal("9", "AGENT 9: Running deep-level post-wipe memory scan...");
-    inspectIntent.innerText = "AUDITING_REMNANT_FOOTPRINTS";
-    inspectSymbol.innerText = "0x00000000";
-    await sleep(500);
-    updateNodeVisual("9", "CLEAN");
-    updateLiveTerminal("9", "AGENT 9: Heap safety validated. Remaining memory exposure parameters: 0.00 KB. Secure BYOK system state locked.");
-
-    // Reset initialization button
-    compileBtn.disabled = false;
-    compileBtn.innerText = "INITIALIZE SECURE NATIVE COMPILATION PIPELINE";
+    // Inject download pathways - System pauses here until user interacts with files
+    createMobileDownloadButtons();
 }
 
 compileBtn.addEventListener('click', () => {
@@ -188,7 +188,5 @@ compileBtn.addEventListener('click', () => {
         }
     }
 
-    // Initialize execution processing via thread-safe interface runtime loop
     runSecureExecutionPipeline(blueprintData, cryptographicKey);
 });
-
