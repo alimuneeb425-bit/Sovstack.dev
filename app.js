@@ -1,11 +1,50 @@
-// app.js - Full Cryptographic Frontend & Live Telemetry Dashboard
+// app.js - Full Cryptographic Frontend & 9-Agent Telemetry Dashboard
 const promptInput = document.getElementById("prompt-input");
 const byokKeyInput = document.getElementById("byok-key-input");
 const compileBtn = document.getElementById("compile-btn");
 const terminalScreen = document.getElementById("terminal-screen");
+const telemetryPercentage = document.getElementById("telemetry-percentage");
 
-// Replace this with your Google Cloud Run URL once deployed
-const CLOUD_URL = "https://YOUR-SERVICE-NAME.a.run.app/compile";
+// Track selected platform (Default to android)
+let selectedPlatform = "android"; 
+
+// UI Selection Logic for Platforms
+function setupPlatformSelectors() {
+    const androidBtn = document.getElementById("platform-android");
+    const iosBtn = document.getElementById("platform-ios");
+    const bothBtn = document.getElementById("platform-both");
+
+    if (!androidBtn || !iosBtn || !bothBtn) return;
+
+    const clearActive = () => {
+        androidBtn.classList.remove("active-platform");
+        iosBtn.classList.remove("active-platform");
+        bothBtn.classList.remove("active-platform");
+    };
+
+    androidBtn.addEventListener("click", () => {
+        clearActive();
+        androidBtn.classList.add("active-platform");
+        selectedPlatform = "android";
+        updateLiveTerminal("SYSTEM", "Target compilation profile altered: Native Android Build (APK).");
+    });
+
+    iosBtn.addEventListener("click", () => {
+        clearActive();
+        iosBtn.classList.add("active-platform");
+        selectedPlatform = "ios";
+        updateLiveTerminal("SYSTEM", "Target compilation profile altered: Native iOS Build (IPA).");
+    });
+
+    bothBtn.addEventListener("click", () => {
+        clearActive();
+        bothBtn.classList.add("active-platform");
+        selectedPlatform = "both";
+        updateLiveTerminal("SYSTEM", "Target compilation profile altered: Dual Cross-Platform Build.");
+    });
+}
+
+const CLOUD_URL = "https://YOUR-GOOGLE-CLOUD-RUN-URL.run.app/compile";
 
 function updateLiveTerminal(agentName, textLine) {
     if (!terminalScreen) return;
@@ -21,7 +60,7 @@ function updateNodeVisual(nodeId, status) {
     }
 }
 
-// True Cryptographic Encryption Layer (AES-GCM 256-bit)
+// Client-Side Cryptographic Shielding (AES-GCM 256-bit)
 async function encryptData(text, password) {
     const enc = new TextEncoder();
     const keyMaterial = await crypto.subtle.importKey(
@@ -43,14 +82,21 @@ async function encryptData(text, password) {
 
 async function runSecureExecutionPipeline(blueprint, key) {
     try {
+        if(telemetryPercentage) telemetryPercentage.innerText = "10%";
         updateLiveTerminal("SYSTEM", "Initializing AES-GCM client-side encryption shield...");
         updateNodeVisual("1", "ACTIVE");
         
-        const { ciphertext, iv } = await encryptData(blueprint, key);
+        // Wrap blueprint data with explicitly chosen target platform metadata
+        const targetedPayload = JSON.stringify({
+            platform: selectedPlatform,
+            blueprint: blueprint
+        });
+
+        const { ciphertext, iv } = await encryptData(targetedPayload, key);
         updateNodeVisual("1", "SUCCESS");
+        if(telemetryPercentage) telemetryPercentage.innerText = "25Hz";
         updateLiveTerminal("AGENT_1", "Handshake encrypted. Launching secure transmission stream...");
 
-        // Establish connection to the cloud enclave
         const response = await fetch(CLOUD_URL, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -59,7 +105,6 @@ async function runSecureExecutionPipeline(blueprint, key) {
 
         if (!response.ok) throw new Error("Cloud Enclave connection rejected.");
 
-        // Read the live streaming telemetry updates directly from the 9 RAG agents
         const reader = response.body.getReader();
         const decoder = new TextDecoder();
         let partialData = "";
@@ -70,7 +115,7 @@ async function runSecureExecutionPipeline(blueprint, key) {
             
             partialData += decoder.decode(value, { stream: true });
             const lines = partialData.split("\n\n");
-            partialData = lines.pop(); // Save incomplete line for next chunk
+            partialData = lines.pop();
 
             for (const line of lines) {
                 if (line.startsWith("data: ")) {
@@ -80,28 +125,34 @@ async function runSecureExecutionPipeline(blueprint, key) {
             }
         }
 
-        // Fetching binary files once the multi-agent stream signals absolute readiness
-        updateLiveTerminal("SYSTEM", "Downloading completed Signed Native APK and Source Code ZIP...");
-        triggerSecureDownload(CLOUD_URL + "/download/apk", "production_native.apk");
+        if(telemetryPercentage) telemetryPercentage.innerText = "100%";
+        updateLiveTerminal("SYSTEM", "Downloading verified outputs from multi-platform pipeline...");
+        
+        // Dynamically request files based on what profile was processed
+        if (selectedPlatform === "android" || selectedPlatform === "both") {
+            triggerSecureDownload(CLOUD_URL + "/download/apk", "production_native.apk");
+        }
+        if (selectedPlatform === "ios" || selectedPlatform === "both") {
+            triggerSecureDownload(CLOUD_URL + "/download/ipa", "production_native.ipa");
+        }
         triggerSecureDownload(CLOUD_URL + "/download/zip", "source_code_bundle.zip");
 
     } catch (error) {
         updateLiveTerminal("SECURITY_ERROR", "Pipeline compromised or network dropped: " + error.message);
         updateNodeVisual("7", "FAILED");
     } finally {
-        compileBtn.disabled = false;
+        if (compileBtn) compileBtn.disabled = false;
     }
 }
 
 function handleLiveTelemetryUpdate(msg) {
-    // Dynamically maps out and visuals the live audit metrics from the 9 internal agents
-    if (msg.includes("AGENT_2")) { updateNodeVisual("2", "ACTIVE"); updateLiveTerminal("AGENT_2_RAG", "Querying Hugging Face vector dataset for native architecture specifications..."); }
-    else if (msg.includes("AGENT_3")) { updateNodeVisual("2", "SUCCESS"); updateNodeVisual("3", "ACTIVE"); updateLiveTerminal("AGENT_3_RAG", "Retrieving context-aware layout blueprints and stitching UI files..."); }
-    else if (msg.includes("AGENT_4")) { updateNodeVisual("3", "SUCCESS"); updateNodeVisual("4", "ACTIVE"); updateLiveTerminal("AGENT_4_RAG", "Executing core state-management structures via retrieved knowledge..."); }
-    else if (msg.includes("AGENT_5")) { updateNodeVisual("4", "SUCCESS"); updateNodeVisual("5", "ACTIVE"); updateLiveTerminal("AGENT_5_RAG", "Scanning syntax trees against security vulnerability patterns..."); }
-    else if (msg.includes("AGENT_6")) { updateNodeVisual("5", "SUCCESS"); updateNodeVisual("6", "ACTIVE"); updateLiveTerminal("AGENT_6_RAG", "Running continuous build loops and adjusting compiler optimizations..."); }
-    else if (msg.includes("AGENT_7")) { updateNodeVisual("6", "SUCCESS"); updateNodeVisual("7", "ACTIVE"); updateLiveTerminal("AGENT_7_RAG", "Invoking background native compilation tools inside memory..."); }
-    else if (msg.includes("AGENT_8")) { updateLiveTerminal("AGENT_8_RAG", "Injecting cryptographic signatures into production APK & generating source ZIP file..."); }
+    if (msg.includes("AGENT_2")) { if(telemetryPercentage) telemetryPercentage.innerText = "35Hz"; updateNodeVisual("2", "ACTIVE"); updateLiveTerminal("AGENT_2_RAG", "Querying Hugging Face vector datasets for target OS parameters..."); }
+    else if (msg.includes("AGENT_3")) { updateNodeVisual("2", "SUCCESS"); updateNodeVisual("3", "ACTIVE"); updateLiveTerminal("AGENT_3_RAG", "Retrieving context-aware layout blueprints..."); }
+    else if (msg.includes("AGENT_4")) { if(telemetryPercentage) telemetryPercentage.innerText = "55Hz"; updateNodeVisual("3", "SUCCESS"); updateNodeVisual("4", "ACTIVE"); updateLiveTerminal("AGENT_4_RAG", "Executing core state-management structures..."); }
+    else if (msg.includes("AGENT_5")) { updateNodeVisual("4", "SUCCESS"); updateNodeVisual("5", "ACTIVE"); updateLiveTerminal("AGENT_5_RAG", "Scanning syntax trees against vulnerability patterns..."); }
+    else if (msg.includes("AGENT_6")) { if(telemetryPercentage) telemetryPercentage.innerText = "75Hz"; updateNodeVisual("5", "SUCCESS"); updateNodeVisual("6", "ACTIVE"); updateLiveTerminal("AGENT_6_RAG", "Running optimization builder configuration..."); }
+    else if (msg.includes("AGENT_7")) { updateNodeVisual("6", "SUCCESS"); updateNodeVisual("7", "ACTIVE"); updateLiveTerminal("AGENT_7_RAG", "Invoking system cross-compilers inside volatile enclave RAM..."); }
+    else if (msg.includes("AGENT_8")) { if(telemetryPercentage) telemetryPercentage.innerText = "90Hz"; updateLiveTerminal("AGENT_8_RAG", "Signing native production binaries & packing structural code package ZIP..."); }
     else if (msg.includes("AGENT_9")) { 
         updateNodeVisual("7", "SUCCESS"); 
         updateLiveTerminal("AGENT_9_RAG", "Payload generation verified. Memory cleanup protocols engaged."); 
@@ -114,16 +165,19 @@ function triggerSecureDownload(fileUrl, defaultName) {
     a.download = defaultName;
     document.body.appendChild(a);
     a.click();
-    setTimeout(() => {
-        a.remove();
-    }, 1000);
+    setTimeout(() => { a.remove(); }, 1000);
 }
 
-compileBtn.addEventListener('click', () => {
-    const blueprintData = promptInput.value.trim();
-    const cryptographicKey = byokKeyInput.value.trim();
-    if (!blueprintData || !cryptographicKey) return alert("Fill out both input forms to initialize the secure tunnel.");
-    
-    compileBtn.disabled = true;
-    runSecureExecutionPipeline(blueprintData, cryptographicKey);
-});
+// Initialize components
+document.addEventListener("DOMContentLoaded", setupPlatformSelectors);
+
+if (compileBtn) {
+    compileBtn.addEventListener('click', () => {
+        const blueprintData = promptInput ? promptInput.value.trim() : "";
+        const cryptographicKey = byokKeyInput ? byokKeyInput.value.trim() : "";
+        if (!blueprintData || !cryptographicKey) return alert("Fill out both input forms to initialize the secure tunnel.");
+        
+        compileBtn.disabled = true;
+        runSecureExecutionPipeline(blueprintData, cryptographicKey);
+    });
+}
