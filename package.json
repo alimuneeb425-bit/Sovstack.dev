@@ -1,0 +1,7 @@
+{
+  "name": "my-api-project",
+  "version": "1.0.0",
+  "dependencies": {
+    "next": "latest"
+  }
+}
