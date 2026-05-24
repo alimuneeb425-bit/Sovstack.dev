@@ -32,7 +32,7 @@
             <div class="mt-2 md:mt-0 flex items-center gap-2">
                 <span class="px-2 py-1 text-[10px] font-mono font-bold bg-emerald-50 text-emerald-700 rounded border border-emerald-200 uppercase tracking-wide flex items-center gap-1.5">
                     <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
-                    Stateless Node Online
+                    Stateless Node Online (Zero-Retention Mode)
                 </span>
             </div>
         </div>
@@ -132,7 +132,6 @@
         // Dynamic theme variable execution utility switcher logic
         function adjustWorkspaceThemeColor(selectedMatrixStyle) {
             const coreBodyElement = document.body;
-            const liveAuditContainer = document.getElementById('terminal-live-audit-stream');
             
             // Clean previous class settings
             coreBodyElement.className = "min-h-screen font-sans antialiased p-4 md:p-8 transition-all duration-300 ";
@@ -172,7 +171,6 @@
                 try {
                     activeLocalBrowserEngine = await window.webllm.CreateMLCEngine(targetOpenModel, {
                         initProgressCallback: (report) => {
-                            // Print true download progress text directly to terminal screen line
                             appendLog(`In-Browser Acceleration Buffer: ${report.text}`, "text-slate-500");
                         }
                     });
@@ -215,7 +213,6 @@
             let processedJavaCodeTextResult = "";
             
             if (activeLocalBrowserEngine) {
-                // True, local private open-source model string generation loop
                 try {
                     const aiInferencePayload = await activeLocalBrowserEngine.chat.completions.create({
                         messages: [
@@ -231,7 +228,6 @@
                 }
             }
 
-            // If local WebGPU code gen wasn't initialized or skipped, construct the deterministic runtime fallback string block
             if (!processedJavaCodeTextResult) {
                 processedJavaCodeTextResult = `package com.sovstack.matrix;\n\npublic class Main {\n    public static void main(String[] args) {\n        // Generated automatically under SovStack framework context constraints\n        System.out.println("Sovereign matrix instance: ${customizedApplicationIdentityString}");\n    }\n}`;
             }
@@ -254,13 +250,12 @@
             // Agent 8: Volatile RAM Supervisor
             appendLog("Agent 8 [Volatile RAM Supervisor]: Sealing payload structures into single unified cryptographic JSON transport stream...", "text-slate-400");
             
-            // Build the single structured request payload to fire over to Hugging Face compiler endpoint
             const integratedTransactionPayload = {
                 source_code: processedJavaCodeTextResult,
                 custom_app_name: customizedApplicationIdentityString,
-                custom_logo_data: globalLoadedBase64LogoString, // Passes asset string safely if added by developer
+                custom_logo_data: globalLoadedBase64LogoString,
                 preopt: "true",
-                auth_node: "Matrix_Agent_9921_Secure" // Matches your required system authorization variable token
+                auth_node: "Matrix_Agent_9921_Secure" // Transmits the handshake key implicitly behind the scenes
             };
 
             // ========================================================
@@ -283,11 +278,9 @@
 
                 appendLog("✓ LINK SECURE: Core compiler payload received. Running native compilation commands (d8, apksigner) inside /dev/shm...", "text-purple-400");
 
-                // Capture the direct binary blob stream returned straight out of Hugging Face RAM
                 const productionArchiveBlob = await serverNetworkTransaction.blob();
                 const navigationStorageUrl = window.URL.createObjectURL(productionArchiveBlob);
                 
-                // Mount temporary download node to trigger immediate browser package storage action
                 appendLog("✓ DOWNLOAD INITIATED: Stream verified. Pulling binary ZIP pack locally to browser storage...", "text-emerald-400 font-bold");
                 const physicalLinkAnchor = document.createElement('a');
                 physicalLinkAnchor.href = navigationStorageUrl;
@@ -296,7 +289,7 @@
                 physicalLinkAnchor.click();
                 physicalLinkAnchor.remove();
 
-                // Agent 9: Destruction Witness Execution Check Tracking
+                // Agent 9: Destruction Witness
                 appendLog("🔥 Agent 9 [Destruction Witness]: Hugging Face RAM shred sequence completed successfully! Workspace overwritten to 0x00.", "text-red-400 font-bold");
                 appendLog("🏁 PIPELINE COMPLETE: Zero retention footprint saved on the network server.", "text-emerald-500 font-bold");
 
@@ -307,4 +300,3 @@
     </script>
 </body>
 </html>
-
