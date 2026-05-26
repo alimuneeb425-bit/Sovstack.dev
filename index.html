@@ -6,121 +6,36 @@
     <title>Sovstack.dev - Matrix Compiler Platform</title>
     <style>
         :root {
-            --bg-color: #0d1117;
-            --card-bg: #161b22;
-            --text-color: #c9d1d9;
-            --accent-color: #58a6ff;
-            --success-color: #2ea44f;
-            --border-color: #30363d;
+            --bg-color: #ffffff;
+            --card-bg: #f4f4f4;
+            --text-color: #333333;
+            --accent-color: #0066cc;
+            --success-color: #28a745;
+            --border-color: #cccccc;
         }
         body {
             background-color: var(--bg-color);
             color: var(--text-color);
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+            font-family: Arial, sans-serif;
             margin: 0;
             padding: 20px;
             display: flex;
             flex-direction: column;
             align-items: center;
         }
-        .container {
-            width: 100%;
-            max-width: 800px;
-        }
-        header {
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 20px;
-            margin-bottom: 30px;
-            text-align: center;
-        }
-        h1 { color: #fff; margin-bottom: 5px; }
-        .subtitle { color: #8b949e; margin-top: 0; }
+        .container { width: 100%; max-width: 800px; }
+        header { border-bottom: 1px solid var(--border-color); padding-bottom: 20px; margin-bottom: 30px; text-align: center; }
         
-        /* Architecture Selection Cards Layout */
-        .options-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 15px;
-            margin-bottom: 30px;
-        }
-        .option-card {
-            background-color: var(--card-bg);
-            border: 2px solid var(--border-color);
-            border-radius: 6px;
-            padding: 15px;
-            cursor: pointer;
-            transition: border-color 0.2s;
-        }
-        .option-card.active {
-            border-color: var(--accent-color);
-        }
-        .option-card h3 { margin-top: 0; color: #fff; }
-        .option-card p { font-size: 13px; color: #8b949e; margin-bottom: 0; }
+        .options-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 15px; margin-bottom: 30px; }
+        .option-card { background-color: var(--card-bg); border: 2px solid var(--border-color); border-radius: 6px; padding: 15px; cursor: pointer; }
+        .option-card.active { border-color: var(--accent-color); }
 
-        /* Configuration Working Panel */
-        .workspace-panel {
-            background-color: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
-            padding: 20px;
-            margin-bottom: 20px;
-        }
-        .form-group {
-            margin-bottom: 15px;
-        }
-        label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: 600;
-            font-size: 14px;
-        }
-        input[type="text"], select {
-            width: 100%;
-            padding: 8px;
-            background-color: var(--bg-color);
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
-            color: #fff;
-            box-sizing: border-box;
-        }
-        input[type="color"] {
-            width: 50px;
-            height: 35px;
-            border: 1px solid var(--border-color);
-            background: none;
-            cursor: pointer;
-        }
+        .workspace-panel { background-color: var(--card-bg); border: 1px solid var(--border-color); border-radius: 6px; padding: 20px; margin-bottom: 20px; }
+        .form-group { margin-bottom: 15px; }
+        input[type="text"], textarea, select { width: 100%; padding: 10px; border: 1px solid var(--border-color); border-radius: 4px; box-sizing: border-box; }
         
-        /* Action Core Triggers */
-        button {
-            background-color: var(--success-color);
-            color: white;
-            border: 1px solid rgba(240,246,252,0.1);
-            border-radius: 6px;
-            padding: 10px 20px;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            width: 100%;
-        }
-        button:disabled {
-            background-color: #216e39;
-            color: #8b949e;
-            cursor: not-allowed;
-        }
-        
-        /* Trace Log Terminal Monitor */
-        .terminal-log {
-            background-color: #000;
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
-            padding: 15px;
-            font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
-            font-size: 12px;
-            color: #39ff14;
-            min-height: 80px;
-            white-space: pre-wrap;
-        }
+        button { background-color: var(--success-color); color: white; border: none; border-radius: 4px; padding: 12px; width: 100%; font-weight: bold; cursor: pointer; }
+        .terminal-log { background-color: #000; color: #39ff14; padding: 15px; font-family: monospace; border-radius: 4px; white-space: pre-wrap; }
     </style>
 </head>
 <body>
@@ -128,170 +43,77 @@
 <div class="container">
     <header>
         <h1>Sovstack.dev Matrix Platform</h1>
-        <p class="subtitle">Zero Data Retention Ephemeral Build Stack Interface</p>
     </header>
 
     <div class="options-grid">
-        <div class="option-card active" id="card-android" onclick="switchTarget('android')">
-            <h3>Android Native App</h3>
-            <p>Compiles explicit standalone signed binaries directly inside RAM disk loops.</p>
-        </div>
-        <div class="option-card" id="card-chatbot" onclick="switchTarget('chatbot')">
-            <h3>Chatbot System App</h3>
-            <p>Generates sovereign assistant nodes featuring dynamic runtime extensions.</p>
-        </div>
-        <div class="option-card" id="card-onprem" onclick="switchTarget('onprem')">
-            <h3>On-Premises Chatbot</h3>
-            <p>Assembles containerized local webbase stacks for isolated network systems.</p>
-        </div>
+        <div class="option-card active" id="card-android" onclick="switchTarget('android')"><h3>Android Native App</h3></div>
+        <div class="option-card" id="card-chatbot" onclick="switchTarget('chatbot')"><h3>Chatbot App</h3></div>
+        <div class="option-card" id="card-onprem" onclick="switchTarget('onprem')"><h3>On-Premises Chatbot</h3></div>
     </div>
 
     <div class="workspace-panel">
         <div class="form-group">
-            <label id="identityLabel">Application Target Name</label>
-            <input type="text" id="appNameInput" placeholder="e.g., MatrixGuardCore" value="MatrixGuardCore">
+            <label>Application Name</label>
+            <input type="text" id="appNameInput" value="MatrixGuardCore">
         </div>
-        
-        <div id="extendedParameters">
-            <div class="form-group">
-                <label>Theme Asset Geometry Hex Color</label>
-                <input type="color" id="themeColorInput" value="#0d1117">
-            </div>
-            <div class="form-group">
-                <label>Core Processing Strategy Profiles</label>
-                <select id="strategyProfile">
-                    <option value="standard_isolated">Volatile Isolated Framework (Standard)</option>
-                    <option value="high_performance">Max Memory Channel Acceleration</option>
-                </select>
-            </div>
+        <div class="form-group">
+            <label>AI Synthesis Prompt</label>
+            <textarea id="promptInput" rows="4" placeholder="Describe your app logic here..."></textarea>
+        </div>
+        <div class="form-group">
+            <label>Theme Color</label>
+            <input type="color" id="themeColorInput" value="#ffffff">
         </div>
     </div>
 
-    <div class="form-group">
-        <button id="buildButton" onclick="triggerAndroidBuild()">Deploy Framework Compilation Sequence</button>
-    </div>
-
-    <label>Active Matrix Diagnostic Output Logs</label>
-    <div class="terminal-log" id="statusOutput">Terminal Ready. Awaiting parameter submission event...</div>
+    <button id="buildButton" onclick="triggerAndroidBuild()">Deploy Build Sequence</button>
+    <br><br>
+    <div class="terminal-log" id="statusOutput">Terminal Ready.</div>
 </div>
 
 <script>
-    // Internal State Tracker representing user active choices
     let currentCompilationTarget = 'android';
 
-    function switchTarget(targetType) {
-        currentCompilationTarget = targetType;
-        
-        // Clear previous card UI visual markers
-        document.getElementById('card-android').classList.remove('active');
-        document.getElementById('card-chatbot').classList.remove('active');
-        document.getElementById('card-onprem').classList.remove('active');
-        
-        // Flag new focused compilation targets
-        document.getElementById(`card-${targetType}`).classList.add('active');
-        
-        const label = document.getElementById('identityLabel');
-        const extras = document.getElementById('extendedParameters');
-        const actionBtn = document.getElementById('buildButton');
-
-        if (targetType === 'android') {
-            label.innerText = "Application Target Name";
-            extras.style.display = "block";
-            actionBtn.innerText = "Deploy Framework Compilation Sequence";
-        } else if (targetType === 'chatbot') {
-            label.innerText = "Chatbot Profile Identifier";
-            extras.style.display = "block";
-            actionBtn.innerText = "Assemble Extensible Assistant Manifest";
-        } else if (targetType === 'onprem') {
-            label.innerText = "Sovereign Target Domain Node Name";
-            extras.style.display = "none";
-            actionBtn.innerText = "Provision On-Premises Base Web Stack";
-        }
-        
-        document.getElementById('statusOutput').innerText = `Target compilation context flipped to: ${targetType.toUpperCase()}`;
+    function switchTarget(type) {
+        currentCompilationTarget = type;
+        document.querySelectorAll('.option-card').forEach(c => c.classList.remove('active'));
+        document.getElementById(`card-${type}`).classList.add('active');
     }
 
     async function triggerAndroidBuild() {
         const buildButton = document.getElementById('buildButton');
-        const statusOutput = document.getElementById('statusOutput');
+        const status = document.getElementById('statusOutput');
         
-        // Extract field metadata values bound inside interface inputs
-        const appNameValue = document.getElementById('appNameInput').value.trim();
-        const themeColorValue = document.getElementById('themeColorInput').value || '#000000';
-        
-        if (!appNameValue) {
-            alert("Please specify a sovereign application identity title first.");
-            return;
-        }
-
-        // Lock workspace interaction layers during sequence operations
         buildButton.disabled = true;
-        statusOutput.innerText = `[System Init] Intercepting Parameters for Target Pipeline: ${currentCompilationTarget.toUpperCase()}...\nActivating 10-Agent Transient Network Matrices...`;
-
-        // TARGET BACKEND BRIDGE ROUTED DIRECTLY THROUGH YOUR EXPERT WORKSPACE CONTEXT
-        const BRAIN_BACKEND_URL = "https://alimuneeb425-sovstack-brain.hf.space/api/build/android";
-
-        // Build request tracking schema structure matches exactly with FastAPI endpoints
-        const executionPayload = {
-            app_name: appNameValue,
-            features: [currentCompilationTarget, "offline_encryption", "zero_leak_ram"],
-            theme_color: themeColorValue,
-            raw_java_override: null
-        };
+        status.innerText = "Initializing 10-Agent network...";
 
         try {
-            statusOutput.innerText += "\n[Agent Orchestrator] Routing layout context rules through 10-Agent sequential healing layers...";
-            
-            const response = await fetch(BRAIN_BACKEND_URL, {
+            const response = await fetch("https://alimuneeb425-sovstack-brain.hf.space/api/build/android", {
                 method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(executionPayload)
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    app_name: document.getElementById('appNameInput').value,
+                    prompt: document.getElementById('promptInput').value,
+                    theme_color: document.getElementById('themeColorInput').value,
+                    features: [currentCompilationTarget]
+                })
             });
 
-            if (!response.ok) {
-                throw new Error(`Orchestration interface rejected request session. Status: ${response.status}`);
-            }
+            if (!response.ok) throw new Error("Compilation Failed");
 
-            statusOutput.innerText += "\n[Matrix Output] Core verification loop passed! Streaming signed binary asset download blocks directly to client hardware stack...";
-
-            // Intercept streaming array chunk parameters directly into a browser system layout blob
-            const binaryBlob = await response.blob();
-            
-            // Generate short-lived local anchor tracking lines to execute target binary download download
-            const downloadUrl = window.URL.createObjectURL(binaryBlob);
-            const anchorElement = document.createElement('a');
-            anchorElement.href = downloadUrl;
-            
-            // Format file storage layouts safely removing spaces
-            const standardizedName = appNameValue.replace(/[^a-zA-Z0-9]/g, "").toLowerCase();
-            
-            // Adapt output package target suffixes dynamically
-            if (currentCompilationTarget === 'android') {
-                anchorElement.download = `${standardizedName}_production_signed.apk`;
-            } else {
-                anchorElement.download = `${standardizedName}_sovereign_package.zip`;
-            }
-            
-            // Trigger browser native save mechanics
-            document.body.appendChild(anchorElement);
-            anchorElement.click();
-            
-            // Wipe short-lived context references from device memory cells
-            document.body.removeChild(anchorElement);
-            window.URL.revokeObjectURL(downloadUrl);
-            
-            statusOutput.innerText += `\n\n[SUCCESS] Build transaction complete! Binary stream parsed successfully. File generated: ${anchorElement.download}\nAll temporary workspace volatile traces have self-vaporized cleanly.`;
-
-        } catch (error) {
-            console.error(error);
-            statusOutput.innerText += `\n\n[CRITICAL ERROR] Pipeline Interface Loop Failure: ${error.message}`;
+            const blob = await response.blob();
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = "output_package.apk";
+            a.click();
+            status.innerText = "Success! Binary downloaded.";
+        } catch (e) {
+            status.innerText = "Error: " + e.message;
         } finally {
             buildButton.disabled = false;
         }
     }
 </script>
-
 </body>
 </html>
