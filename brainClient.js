@@ -4,7 +4,8 @@
  */
 
 // Fallback to local address for developer terminal loops
-const BRAIN_API_URL = 'http://localhost:5000'; 
+const BRAIN_API_URL = 'https://glowing-space-journey-xrwq546jpv4r246r-5000.app.github.dev';
+
 
 /**
  * Connects UI text fields directly with the 9-agent compilation framework.
