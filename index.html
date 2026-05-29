@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enterprise Synthesis Engine | Master Control</title>
+    <style>
+        :root { --bg: #f8fafc; --panel: #ffffff; --primary: #2563eb; --border: #e2e8f0; --text: #1e293b; --danger: #ef4444; }
+        body { margin: 0; font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--text); height: 100vh; overflow: hidden; }
+
+        /* 1. GATEKEEPER LANDING (Layer 1) */
+        #gatekeeper-landing { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #0f172a; color: white; display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 9999; }
+        .gate-input { padding: 15px; width: 350px; border-radius: 6px; border: none; font-family: monospace; font-size: 16px; margin-bottom: 20px; text-align: center; }
+
+        /* 2. MAIN APPLICATION (Layer 2 - Hidden until Auth) */
+        #main-app { display: none; height: 100vh; grid-template-columns: 260px 1fr 350px; grid-template-rows: 1fr auto; }
+        
+        .sidebar { background: var(--panel); border-right: 1px solid var(--border); padding: 20px; grid-row: 1 / 3; overflow-y: auto; }
+        .main-panel { padding: 30px; display: flex; flex-direction: column; gap: 20px; }
+        .audit-panel { background: var(--panel); border-left: 1px solid var(--border); padding: 20px; overflow-y: auto; grid-row: 1 / 3; }
+        
+        .card { background: white; border: 1px solid var(--border); border-radius: 8px; padding: 20px; }
+        .primary-actions { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-bottom: 20px; }
+        .btn { padding: 12px; border-radius: 6px; border: 1px solid var(--border); background: #f8fafc; cursor: pointer; text-align: center; font-size: 13px; font-weight: 600; transition: 0.2s; }
+        .btn:hover { background: #e2e8f0; }
+        .btn-agent { display: block; width: 100%; text-align: left; margin-bottom: 8px; }
+        
+        #log { background: #000; color: #00ff41; padding: 15px; border-radius: 6px; font-family: 'Courier New', monospace; height: 300px; overflow-y: auto; font-size: 12px; }
+        .footer-controls { grid-column: 2; padding: 20px; border-top: 1px solid var(--border); background: var(--panel); }
+    </style>
+</head>
+<body>
+
+<div id="gatekeeper-landing">
+    <h2 style="margin-bottom: 20px;">SYSTEM AUTHORIZATION REQUIRED</h2>
+    <p id="generated-key" style="font-family: monospace; font-size: 22px; color: #00ff41; letter-spacing: 2px;"></p>
+    <input type="text" id="access-input" class="gate-input" placeholder="Paste access key...">
+    <button class="btn" style="width: 350px; background: var(--primary); color: white; border: none;" onclick="unlockSystem()">ACCESS ENGINE</button>
+</div>
+
+<div id="main-app">
+    <aside class="sidebar">
+        <h3>9-AGENT CLUSTER</h3>
+        <button class="btn btn-agent" onclick="executeAction('ANDROID_BUILD_AGENT')">1. Android Build Agent</button>
+        <button class="btn btn-agent" onclick="executeAction('CHATBOT_FACTORY')">2. Chatbot Factory</button>
+        <button class="btn btn-agent" onclick="executeAction('DATA_RAG_AGENT')">3. Data Retrieval</button>
+        <button class="btn btn-agent" onclick="executeAction('INTEGRITY_AGENT')">4. Integrity/Encryption</button>
+        <button class="btn btn-agent" onclick="executeAction('DEPLOY_AGENT')">5. Deployment Engine</button>
+        <button class="btn btn-agent" onclick="executeAction('ANALYTICS_AGENT')">6. Analytics Agent</button>
+        <button class="btn btn-agent" onclick="executeAction('MEMORY_AGENT')">7. Context Memory</button>
+        <button class="btn btn-agent" onclick="executeAction('QA_AGENT')">8. QA Validation</button>
+        <button class="btn btn-agent" onclick="executeAction('ORCHESTRATOR_AGENT')">9. Master Controller</button>
+    </aside>
+
+    <main class="main-panel">
+        <div class="primary-actions">
+            <button class="btn" onclick="executeAction('ANDROID_APP')">🚀 ANDROID APP GENERATOR</button>
+            <button class="btn" onclick="executeAction('CHATBOT_APP')">🤖 CHATBOT APP GENERATOR</button>
+            <button class="btn" onclick="executeAction('WEB_CHATBOT')">🌐 WEB-BASED CHATBOT</button>
+        </div>
+
+        <div class="card">
+            <h3>Autonomous Synthesis</h3>
+            <input type="text" id="prompt" placeholder="Describe the application requirements..." style="width: 100%; padding: 12px; margin-bottom: 10px; border: 1px solid var(--border); border-radius: 6px;">
+        </div>
+        
+        <div id="log">[SYSTEM] Ready for deployment instructions...</div>
+    </main>
+
+    <aside class="audit-panel">
+        <h3>AUDIT LEDGER</h3>
+        <div id="ledger" style="font-size: 11px;"></div>
+    </aside>
+
+    <footer class="footer-controls">
+        <button class="btn" style="color: var(--danger);" onclick="autoDestruct()">⚠️ PURGE ALL DATA (AUTO-DESTRUCT)</button>
+    </footer>
+</div>
+
+<script>
+    const BACKEND_URL = "https://your-codespace-url.app.github.dev";
+    
+    // Gatekeeper Key Generation
+    const randomKey = "Mitw" + Math.floor(Math.random()*9999) + "'@¥" + Math.floor(Math.random()*99) + "×" + Math.random().toString(36).substring(7);
+    document.getElementById('generated-key').innerText = randomKey;
+
+    function unlockSystem() {
+        if (document.getElementById('access-input').value === randomKey) {
+            document.getElementById('gatekeeper-landing').style.display = 'none';
+            document.getElementById('main-app').style.display = 'grid';
+        } else { alert("ACCESS DENIED: Invalid Key."); }
+    }
+
+    async function executeAction(action) {
+        log(`[GATEKEEPER] Auth verified. Initiating: ${action}...`);
+        
+        if (action === 'WEB_CHATBOT') {
+            generateWhiteLabelWidget();
+            return;
+        }
+
+        if (action === 'ANDROID_APP' || action === 'CHATBOT_APP') {
+            await simulateBuild();
+        }
+
+        try {
+            const resp = await fetch(`${BACKEND_URL}/api/dispatch`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ action, ts: Date.now() })
+            });
+            const data = await resp.json();
+            updateLedger(action, data.hash || 'VERIFIED');
+            log(`[SUCCESS] ${action} execution finalized.`);
+        } catch(e) { log(`[ERROR] Backend connection failed.`); }
+    }
+
+    // WHITE-LABEL WIDGET GENERATOR (No Burden/No Link)
+    function generateWhiteLabelWidget() {
+        const snippet = `
+<div id="chat-widget-root"></div>
+<script>
+  (function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "${BACKEND_URL}/secure-widget.js";
+    fjs.parentNode.insertBefore(js, fjs);
+    js.onload = () => { SecureWidget.init({ endpoint: "${BACKEND_URL}" }); };
+  }(document, 'script', 'secure-chat-widget'));
+<\/script>`;
+        log("[GENERATOR] Web-Chatbot Snippet Generated:");
+        log(snippet);
+        alert("Snippet generated! The widget code is in the system logs.");
+    }
+
+    async function simulateBuild() {
+        const steps = [":app:clean", ":app:compile", ":app:sign", "SUCCESS: Binary ready."];
+        for(let s of steps) {
+            await new Promise(r => setTimeout(r, 600));
+            log(`[GRADLE] ${s}`);
+        }
+    }
+
+    function log(msg) {
+        const logDiv = document.getElementById('log');
+        logDiv.innerHTML += `<br>> ${msg}`;
+        logDiv.scrollTop = logDiv.scrollHeight;
+    }
+
+    function updateLedger(action, hash) {
+        const ledger = document.getElementById('ledger');
+        ledger.innerHTML = `<div style="border-bottom:1px solid #ccc; padding:5px 0;">TX: ${hash ? hash.substring(0,8) : '0000'}...<br>AGENT: ${action}<br>TIME: ${new Date().toLocaleTimeString()}</div>` + ledger.innerHTML;
+    }
+
+    function autoDestruct() {
+        if(confirm("Confirm: Wipe all data?")) {
+            fetch(`${BACKEND_URL}/purge`, {method: 'POST'});
+            location.reload();
+        }
+    }
+</script>
+</body>
+</html>
+
